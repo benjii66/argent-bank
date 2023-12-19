@@ -1,11 +1,25 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+
+import { useDispatch, useSelector } from 'react-redux'
+
+import { Logout } from '../Reducers/features/logout/Logout'
+
 import argentBankLogo from '../../Images/argentBankLogo.png'
 
 export const Header = () => {
-  const userLocation = useLocation();
 
-  const isUserDashboard = userLocation.pathname === '/userDashboard';
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { userInfo } = useSelector(state => state.userLogin);
+  const isUserLoggedIn = !!userInfo;
+  const isHomePage = location.pathname === '/';
+
+  const handleLogout = () => {
+    localStorage.removeItem('userInfo');
+    dispatch(Logout());
+  };
+
   return (
     <nav className="main-nav">
     <Link className="main-nav-logo" to="/">
@@ -17,14 +31,23 @@ export const Header = () => {
       <h1 className="sr-only">Argent Bank</h1>
     </Link>
     <div>
-        <Link to='/signIn' className='main-nav-item'>
-          {/* signout si loggé mais à faire dans la partie 3  */}
-        <i className="fa fa-user-circle"></i>
-           {isUserDashboard ? 'Sign Out' : 'Sign In'}
-        </Link>
+          {isUserLoggedIn ? (
+            <>
+            {isHomePage && (
+              <Link to="/userDashboard" className='main-nav-item'>
+                <i className="fa fa-user-circle"></i>Dashboard
+                 </Link>
+              )}
+                <Link to="/" onClick={handleLogout} className='main-nav-item'>
+                    <i className="fa fa-user-circle"></i> Sign Out
+                </Link>
+            </>
+            ) : (
+                <Link to='/signIn' className='main-nav-item'>
+                    <i className="fa fa-user-circle"></i> Sign In
+                </Link>
+            )}
     </div>
   </nav>
   )
 }
-
- 
