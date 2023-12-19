@@ -9,7 +9,8 @@ import argentBankLogo from '../../Images/argentBankLogo.png'
 
 export const Header = () => {
 
-  const dispatch = useDispatch();
+  const logoutDispatch = useDispatch();
+
   const location = useLocation();
   const { userInfo } = useSelector(state => state.userLogin);
   const isUserLoggedIn = !!userInfo;
@@ -17,7 +18,7 @@ export const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
-    dispatch(Logout());
+    logoutDispatch(Logout());
   };
 
   return (
