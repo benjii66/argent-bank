@@ -1,0 +1,96 @@
+/* styles.css */
+
+
+.transaction {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+
+}
+
+
+.transaction-label-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.transaction-label {
+  flex-basis: 50%;
+  text-align: left;
+}
+
+.transaction-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #61b37b;
+  padding: 10px;
+}
+
+.transaction-label-value {
+  flex-basis: 15%;
+  text-align: left;
+}
+
+.arrow-icon {
+  cursor: pointer;
+}
+
+.transaction-content-wrapper p {
+  color: white;
+  font-weight: bold;
+  margin: 0;
+}
+
+.wrapper {
+  text-align: center;
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: row;
+  background-color: #61b37b;
+  color: white;
+  padding: 10px;
+  align-items: flex-start;
+}
+
+.transaction-details-label,
+.transaction-details-value {
+  margin-right: 10px;
+}
+
+.transaction-details-label {
+  font-weight: bold;
+  text-align: left;
+}
+
+.transaction-details-value {
+  text-align: left;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: row;
+}
+.transaction-details-label,
+.transaction-details-value {
+  text-align: left;
+  margin-right: 10px;
+  margin-bottom: 20px; 
+}
+
+.transaction-details-value{
+  text-align: left;
+  margin-left: 400px;
+}
+
+.edit-icon {
+  cursor: pointer;
+  margin-left: 5px; 
+  color: white; 
+  text-decoration: none !important;
+}

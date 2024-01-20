@@ -5,6 +5,8 @@ import {Home} from './Pages/Home';
 import {SignIn} from './Pages/SignIn';
 import {UserDashboard} from './Pages/UserDashboard';
 import {UserProfile} from './Pages/UserProfile';
+import {Transactions} from './Pages/Transactions';
+
 
 
 import {Header} from './Components/Common/Header';
@@ -22,6 +24,7 @@ function App() {
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/userDashboard" element={<UserDashboard />} />
           <Route path="/userProfile" element={<UserProfile />} />
+          <Route path="/transactions" element={<Transactions/>} />"
         </Routes>
       </main>
       <Footer/>

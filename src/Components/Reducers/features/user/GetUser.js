@@ -1,24 +1,50 @@
 import axios from 'axios';
 import { apiPath } from '../../apiPaths';
 
-// Types d'actions
-export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
-export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
-export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
+export const GET_USER_PROFILE_REQUEST = 'GET_USER_PROFILE_REQUEST';
+export const GET_USER_PROFILE_SUCCESS = 'GET_USER_PROFILE_SUCCESS';
+export const GET_USER_PROFILE_FAILURE = 'GET_USER_PROFILE_FAILURE';
 
-export const GetUser = () => {
-    return async dispatch => {
-        dispatch({ type: FETCH_USERS_REQUEST });
-        try {
-            const token = localStorage.getItem('token'); // get the token from localStorage
-            const response = await axios.get(`${apiPath}/user/profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            dispatch({ type: FETCH_USERS_SUCCESS, payload: response.data });
-        } catch (error) {
-            dispatch({ type: FETCH_USERS_FAILURE, payload: error });
-        }
+export const GetUser = () => async (dispatch) => {
+
+  try {
+    
+    dispatch({ type: GET_USER_PROFILE_REQUEST });
+
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const token = userInfo?.token;
+
+    console.log('userInfo:', userInfo);
+    console.log('Token:', token);
+    
+    if(!token) {
+        console.error('Oh le token dans le local Storage là');
+        return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     };
+
+    const {data}  = await axios.post(`${apiPath}/profile`, {} ,config);
+
+    console.log('User profile data received:', data.body);
+    
+    dispatch({
+      type: GET_USER_PROFILE_SUCCESS,
+      payload: data.body,
+    });
+
+
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    dispatch({
+      type: GET_USER_PROFILE_FAILURE,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
 };

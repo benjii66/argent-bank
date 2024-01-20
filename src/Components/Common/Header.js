@@ -14,7 +14,7 @@ export const Header = () => {
   const location = useLocation();
   const { userInfo } = useSelector(state => state.userLogin);
   const isUserLoggedIn = !!userInfo;
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === '/' || location.pathname === '/userProfile' || location.pathname === '/transactions';
 
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
@@ -34,19 +34,19 @@ export const Header = () => {
     <div>
           {isUserLoggedIn ? (
             <>
-            {isHomePage && (
-              <Link to="/userDashboard" className='main-nav-item'>
-                <i className="fa fa-user-circle"></i>Dashboard
-                 </Link>
+              {isHomePage && (
+                  <Link to="/userDashboard" className='main-nav-item'>
+                    <i className="fa fa-user-circle"></i>Dashboard
+                  </Link>
               )}
-                <Link to="/" onClick={handleLogout} className='main-nav-item'>
+                  <Link to="/" onClick={handleLogout} className='main-nav-item'>
                     <i className="fa fa-user-circle"></i> Sign Out
-                </Link>
+                  </Link>
             </>
             ) : (
-                <Link to='/signIn' className='main-nav-item'>
+                  <Link to='/signIn' className='main-nav-item'>
                     <i className="fa fa-user-circle"></i> Sign In
-                </Link>
+                  </Link>
             )}
     </div>
   </nav>

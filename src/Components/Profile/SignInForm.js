@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import { Login } from '../Reducers/features/login/Login';
 import { GetUser } from '../Reducers/features/user/GetUser';
 
@@ -15,9 +17,10 @@ export const SignInForm = () => {
 
     useEffect(() => {
         if (userInfo) {
+            dispatch(GetUser());
             navigate('/userDashboard');
         }
-    }, [userInfo, navigate]);
+    }, [userInfo,dispatch, navigate]);
 
     const handleChange = (connexionInfo) => {
         setInformations({ ...informations, [connexionInfo.target.id]: connexionInfo.target.value });
@@ -30,7 +33,6 @@ export const SignInForm = () => {
     const handleSubmit = (formInfo) => {
         formInfo.preventDefault();
         dispatch(Login(informations));
-        dispatch(GetUser());
     };
 
     return (
