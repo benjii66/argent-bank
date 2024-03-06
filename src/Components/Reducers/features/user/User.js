@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 export const User = () => {
 
   const dispatch = useDispatch();
-  const {profile, loading, error} = useSelector(state => state.user);
+  const {profile,error} = useSelector(state => state.user);
   
   console.log("profile : ", profile.userName);
 

@@ -32,24 +32,36 @@ export const SignInForm = () => {
 
     const handleSubmit = (formInfo) => {
         formInfo.preventDefault();
-        dispatch(Login(informations));
+        dispatch(Login({...informations, rememberMe}));
     };
+
+
+    let errorMessage = "";
+        if (error && error.message) {
+            const messageLower = error.message.toLowerCase();
+            if(messageLower.includes("email"))
+                errorMessage = "Email invalide";
+            else if (messageLower.includes("password"))
+                errorMessage = "Mot de passe incorrect";
+            else 
+                errorMessage = "Erreur lors de la connexion";
+        }
 
     return (
         <form onSubmit={handleSubmit}>
             <div className="input-wrapper">
                 <label htmlFor="email">Email</label>
-                <input type="text" id="email" onChange={handleChange} />
+                <input type="text" id="email" value={informations.email} onChange={handleChange} />
             </div>
             <div className="input-wrapper">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" onChange={handleChange} />
+                <input type="password" id="password" value={informations.password} onChange={handleChange} />
             </div>
             <div className="input-remember">
                 <input type="checkbox" id="remember-me" onChange={handleRememberMe} />
                 <label htmlFor="remember-me">Remember me</label>
             </div>
-            {error && <p className="error">Erreur : {error.message}</p>}
+            {errorMessage && <p className="error" style={{color: 'red'}}>{errorMessage}</p>}
             <button type="submit" className="sign-in-button">Sign In</button>
         </form>
     );

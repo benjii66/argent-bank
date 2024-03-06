@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 export const UpdateUserProfileForm = () => {
     const dispatch = useDispatch();
-    const { profile, loading, error } = useSelector(state => state.user);
+    const { profile, loading } = useSelector(state => state.user);
     const success = useSelector(state => state.userProfileUpdate.success);
 
     const [username, setUsername] = useState(profile?.userName || '');
@@ -19,15 +19,18 @@ export const UpdateUserProfileForm = () => {
 
     useEffect(() => {
         dispatch(GetUser());
+    }, [dispatch]);
+
+
+    useEffect(() => {
         if (success) {
-            console.log("Pseudo mise à jour", profile.userName);
+            console.log("Pseudo mise à jour", username);
             setSuccessMessage('Profil mis à jour avec succès!');
             setTimeout(() => {
                 setSuccessMessage('');
             }, 5000); 
-            dispatch(GetUser());
         }
-    }, [success, dispatch]);
+    }, [success, username]);
 
     useEffect(() => {
         setUsername(profile?.userName || '');
@@ -55,7 +58,7 @@ export const UpdateUserProfileForm = () => {
     return (
         <>
             {successMessage && <div className="success-message">{successMessage}</div>}
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {errorMessage && <div className="error-message" style={{color : 'red'}}>{errorMessage}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="input-wrapper">
                     <label htmlFor="username">Modifier le Pseudo:</label>
