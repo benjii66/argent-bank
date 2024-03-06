@@ -15,12 +15,25 @@ export const SignInForm = () => {
     const userLogin = useSelector(state => state.userLogin); 
     const { userInfo, error } = userLogin;
 
+    const[errorMessage, setErrorMessage] = useState('');
+
     useEffect(() => {
         if (userInfo) {
             dispatch(GetUser());
             navigate('/userDashboard');
         }
     }, [userInfo,dispatch, navigate]);
+
+    useEffect(() => {
+        if (error) {
+            if(error.includes("email"))
+                setErrorMessage("Email invalide");
+            else if (error.includes("password"))
+                setErrorMessage("Mot de passe incorrect");
+            else 
+                setErrorMessage("Erreur lors de la connexion");
+        }
+    }, [error]);
 
     const handleChange = (connexionInfo) => {
         setInformations({ ...informations, [connexionInfo.target.id]: connexionInfo.target.value });
@@ -33,19 +46,11 @@ export const SignInForm = () => {
     const handleSubmit = (formInfo) => {
         formInfo.preventDefault();
         dispatch(Login({...informations, rememberMe}));
+        setErrorMessage('');
     };
 
 
-    let errorMessage = "";
-        if (error && error.message) {
-            const messageLower = error.message.toLowerCase();
-            if(messageLower.includes("email"))
-                errorMessage = "Email invalide";
-            else if (messageLower.includes("password"))
-                errorMessage = "Mot de passe incorrect";
-            else 
-                errorMessage = "Erreur lors de la connexion";
-        }
+    
 
     return (
         <form onSubmit={handleSubmit}>
