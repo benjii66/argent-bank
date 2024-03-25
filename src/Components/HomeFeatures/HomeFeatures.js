@@ -1,7 +1,7 @@
 import React from 'react';
-import Money from '../../Images/icon-money.png';
-import Chat from '../../Images/icon-chat.png';
-import Security from '../../Images/icon-security.png';
+import Money from '../../Images/icon-money.webp';
+import Chat from '../../Images/icon-chat.webp';
+import Security from '../../Images/icon-security.webp';
 
 const Features = () => [
   {
@@ -29,13 +29,13 @@ export const HomeFeatures = () => {
   return (
     <section className="features">
       <h2 className="sr-only">Features</h2>
-      {features.map((feature, index) => (
-        <div className="feature-item" key={index}>
-          <img src={feature.src} alt={feature.alt} className="feature-icon" />
-          <h3 className="feature-item-title">{feature.title}</h3>
-          <p>{feature.text}</p>
-        </div>
-      ))}
+        {features.map((feature, index) => (
+          <div className="feature-item" key={index}>
+            <img src={feature.src} alt={feature.alt} className="feature-icon" />
+            <h3 className="feature-item-title">{feature.title}</h3>
+            <p>{feature.text}</p>
+          </div>
+        ))}
     </section>
   );
 }

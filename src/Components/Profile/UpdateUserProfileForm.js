@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../Reducers/features/user/updateUserProfile';
 import { GetUser } from '../Reducers/features/user/GetUser';
 import { Link } from 'react-router-dom';
+import Button from '../Common/Button';
 
 
 export const UpdateUserProfileForm = () => {
@@ -59,25 +60,30 @@ export const UpdateUserProfileForm = () => {
         <>
             {successMessage && <div className="success-message">{successMessage}</div>}
             {errorMessage && <div className="error-message" style={{color : 'red'}}>{errorMessage}</div>}
-            <form onSubmit={handleSubmit}>
-                <div className="input-wrapper">
-                    <label htmlFor="username">Modifier le Pseudo:</label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        placeholder={profile.userName} 
-                        onChange={handleUsernameChange} 
-                    />
-                </div>
-                <button type="submit" disabled={loading} className="edit-button">
-                    {loading ? 'Chargement...' : 'Modifier'}
-                </button>
-                <Link to="/userDashboard">
-                <button type="button" onClick={handleCancel} className="edit-button">
-                    Annuler
-                </button>
-                </Link>
-            </form>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-wrapper">
+                        <label htmlFor="username">Modifier le Pseudo:</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            placeholder={profile.userName} 
+                            onChange={handleUsernameChange} 
+                        />
+                    </div>
+                        <Button 
+                            title={loading ? 'Chargement...' : 'Modifier'}
+                            style="edit-button"
+                            type="submit"
+                            disabled={loading}
+                        />                
+                        <Link to="/userDashboard">
+                            <Button 
+                                title="Annuler"
+                                style="edit-button"
+                                type="button"
+                            />
+                        </Link>
+                </form>
         </>
     );
 };

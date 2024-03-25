@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import { Login } from '../Reducers/features/login/Login';
 import { GetUser } from '../Reducers/features/user/GetUser';
+
+import Button from '../Common/Button';
+
 
 export const SignInForm = () => {
     const [informations, setInformations] = useState({ email: '', password: '' });
@@ -47,10 +48,7 @@ export const SignInForm = () => {
         formInfo.preventDefault();
         dispatch(Login({...informations, rememberMe}));
         setErrorMessage('');
-    };
-
-
-    
+    };    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -67,7 +65,11 @@ export const SignInForm = () => {
                 <label htmlFor="remember-me">Remember me</label>
             </div>
             {errorMessage && <p className="error" style={{color: 'red'}}>{errorMessage}</p>}
-            <button type="submit" className="sign-in-button">Sign In</button>
+                <Button 
+                    title= "Sign In" 
+                    style="sign-in-button"
+                    type="submit"             
+                />
         </form>
     );
 };

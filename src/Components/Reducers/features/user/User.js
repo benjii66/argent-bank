@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetUser } from './GetUser';
 import { Link } from 'react-router-dom';
+import Button from '../../../Common/Button';
 
 
 
@@ -23,10 +24,14 @@ export const User = () => {
     <>
       <div className="header">
         <h1>Welcome back<br />{profile.userName} !</h1>
-       <Link to="/userProfile" className='main-nav-item'>
-        <button className="edit-button">Edit Name</button></Link >
+          <Link to="/userProfile" className='main-nav-item'>
+              <Button 
+                title= "Edit Name"
+                style ="edit-button"
+              />
+          </Link >
       </div>
-      <h2 className="sr-only">Accounts</h2>      
+        <h2 className="sr-only">Accounts</h2>      
     </>
     
   );

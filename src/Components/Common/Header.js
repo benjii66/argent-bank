@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux'
-
 import { Logout } from '../Reducers/features/logout/Logout'
 
 import argentBankLogo from '../../Images/argentBankLogo.png'

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '../Common/Button';
 
 const accountsData = [
     {
@@ -27,12 +28,15 @@ export const Accounts = () => {
         <section className="account" key={index}>
           <div className="account-content-wrapper">
             <h3 className="account-title">{account.title}</h3>
-            <p className="account-amount">{account.amount}</p>
-            <p className="account-amount-description">{account.description}</p>
+              <p className="account-amount">{account.amount}</p>
+              <p className="account-amount-description">{account.description}</p>
           </div>
           <div className="account-content-wrapper cta">
             <Link to="/transactions">
-            <button className="transaction-button">View transactions</button>
+              <Button
+                title = "View transactions"
+                style = "transaction-button"
+              />
             </Link>
           </div>
         </section>

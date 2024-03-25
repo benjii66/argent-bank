@@ -18,7 +18,7 @@ export const GetUser = () => async (dispatch) => {
     console.log('Token:', token);
     
     if(!token) {
-        console.error('Oh le token dans le local Storage là');
+        console.error('Token not found in local storage. User not connected.');
         return;
     }
 
