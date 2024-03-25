@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../Reducers/features/user/updateUserProfile';
 import { GetUser } from '../Reducers/features/user/GetUser';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../Common/Button';
 
 
 export const UpdateUserProfileForm = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const { profile, loading } = useSelector(state => state.user);
     const success = useSelector(state => state.userProfileUpdate.success);
 
@@ -18,28 +21,23 @@ export const UpdateUserProfileForm = () => {
 
     console.log("pseudo du profil", profile?.userName);
 
-    useEffect(() => {
-        dispatch(GetUser());
-    }, [dispatch]);
+    useEffect(() => {dispatch(GetUser());} , [dispatch]);
 
 
     useEffect(() => {
         if (success) {
-            console.log("Pseudo mise à jour", username);
-            setSuccessMessage('Profil mis à jour avec succès!');
+            setSuccessMessage("Profil mis à jour avec succès!");
             setTimeout(() => {
-                setSuccessMessage('');
-            }, 5000); 
+                navigate("/userDashboard");
+                dispatch({type: 'RESET_UPDATE_USER_PROFILE_SUCCESS'});
+            }, 2000); 
         }
-    }, [success, username]);
+    }, [success, navigate, dispatch, username]);
 
-    useEffect(() => {
-        setUsername(profile?.userName || '');
-    }, [profile])
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    };
+    useEffect(() => {setUsername(profile?.userName || ''); }, [profile])
+
+    const handleUsernameChange = (event) =>setUsername(event.target.value);    
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -52,9 +50,7 @@ export const UpdateUserProfileForm = () => {
         setErrorMessage('');
     };
 
-    const handleCancel = () => {
-        setUsername(profile.userName || '');
-    };
+    const handleCancel = () => setUsername(profile.userName || '');
 
     return (
         <>

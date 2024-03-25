@@ -4,6 +4,7 @@ import { apiPath } from '../../apiPaths'
 export const UPDATE_USER_PROFILE_REQUEST = 'UPDATE_USER_PROFILE_REQUEST'
 export const UPDATE_USER_PROFILE_SUCCESS = 'UPDATE_USER_PROFILE_SUCCESS'
 export const UPDATE_USER_PROFILE_FAILURE = 'UPDATE_USER_PROFILE_FAILURE'
+export const RESET_UPDATE_USER_PROFILE_SUCCESS = 'RESET_UPDATE_USER_PROFILE_SUCCESS'
 
 export const updateUserProfile = (userData) => async (dispatch) => {
 

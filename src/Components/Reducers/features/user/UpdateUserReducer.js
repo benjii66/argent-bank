@@ -8,6 +8,8 @@ export const userProfileUpdateReducer = (state = initialState, action) => {
             return { loading: false, success: true, userInfo: action.payload };
         case 'UPDATE_USER_PROFILE_FAILURE':
             return { loading: false, error: action.payload };
+        case 'RESET_UPDATE_USER_PROFILE_SUCCESS':
+            return { ...state, success: false };
         default:
             return state;
     }
