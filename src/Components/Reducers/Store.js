@@ -5,6 +5,8 @@ import { userProfileUpdateReducer } from './features/user/UpdateUserReducer';
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo'))
+        : sessionStorage.getItem('userInfo')
+            ? JSON.parse(sessionStorage.getItem('userInfo'))
     : null;
 
 export const Store = configureStore({

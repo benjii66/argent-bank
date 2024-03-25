@@ -11,14 +11,14 @@ export const GetUser = () => async (dispatch) => {
     
     dispatch({ type: GET_USER_PROFILE_REQUEST });
 
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')) || JSON.parse(sessionStorage.getItem('userInfo'));
     const token = userInfo?.token;
 
     console.log('userInfo:', userInfo);
     console.log('Token:', token);
     
     if(!token) {
-        console.error('Token not found in local storage. User not connected.');
+        console.error('Token ');
         return;
     }
 

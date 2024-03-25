@@ -7,7 +7,7 @@ export const SignIn = () => {
     <>
       <main className="main bg-dark">
       <section className="sign-in-content">
-        <i className="fa fa-user-circle sign-in-icon"/>
+        <i className="fa fa-user-circle sign-in-icon" aria-hidden="true"/>
           <h1>Sign In</h1>
             <SignInForm/>
       </section>

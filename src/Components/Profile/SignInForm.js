@@ -64,7 +64,7 @@ export const SignInForm = () => {
                 <input type="checkbox" id="remember-me" onChange={handleRememberMe} />
                 <label htmlFor="remember-me">Remember me</label>
             </div>
-            {errorMessage && <p className="error" style={{color: 'red'}}>{errorMessage}</p>}
+            {errorMessage && <p className="error" style={{color: 'red'}} aria-live="assertive">{errorMessage}</p>}
                 <Button 
                     title= "Sign In" 
                     style="sign-in-button"

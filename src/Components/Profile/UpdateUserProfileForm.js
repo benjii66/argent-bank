@@ -58,8 +58,8 @@ export const UpdateUserProfileForm = () => {
 
     return (
         <>
-            {successMessage && <div className="success-message">{successMessage}</div>}
-            {errorMessage && <div className="error-message" style={{color : 'red'}}>{errorMessage}</div>}
+            {successMessage && <div className="success-message" aria-live="polite">{successMessage}</div>}
+            {errorMessage && <div className="error-message" style={{color : 'red'}} aria-live="assertive">{errorMessage}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="input-wrapper">
                         <label htmlFor="username">Modifier le Pseudo:</label>
@@ -74,13 +74,14 @@ export const UpdateUserProfileForm = () => {
                             title={loading ? 'Chargement...' : 'Modifier'}
                             style="edit-button"
                             type="submit"
-                            disabled={loading}
+                            disabledStyle={loading}
                         />                
                         <Link to="/userDashboard">
                             <Button 
                                 title="Annuler"
                                 style="edit-button"
                                 type="button"
+                                onClickStyle={handleCancel}
                             />
                         </Link>
                 </form>

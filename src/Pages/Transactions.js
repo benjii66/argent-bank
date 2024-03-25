@@ -68,7 +68,7 @@ export const Transactions = () => {
             <div className="transaction-label-value">
               <p className="transaction-value">{transaction.balance}</p>
             </div>
-            <p className="arrow-icon" onClick={() => handleDetails(index)}>
+            <p className="arrow-icon" onClick={() => handleDetails(index)}  aria-expanded={openIndex === index}>
               {openIndex === index ? '▲' : '▼'}
             </p>
           </div>
@@ -82,10 +82,10 @@ export const Transactions = () => {
                 </div>
                 <div className="transaction-details-value">
                   <p>{transaction.details.transactionType}</p>
-                  <Link to="/">
+                  <Link to="/" aria-label={`Edit ${transaction.details.category} category`}>
                     <p className="edit-icon">{transaction.details.category}&#9998;</p>
                   </Link>
-                  <Link to="/">
+                  <Link to="/" aria-label={`Edit ${transaction.details.category} category`}>
                     <p className="edit-icon">{transaction.details.note}&#9998;</p>
                   </Link>
                 </div>

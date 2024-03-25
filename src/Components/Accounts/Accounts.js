@@ -25,7 +25,7 @@ export const Accounts = () => {
     <>
       <h2 className="sr-only">Accounts</h2>
       {accountsData.map((account, index) => (
-        <section className="account" key={index}>
+        <section className="account" key={index} aria-labelledby={`account-title-${index}`}>
           <div className="account-content-wrapper">
             <h3 className="account-title">{account.title}</h3>
               <p className="account-amount">{account.amount}</p>

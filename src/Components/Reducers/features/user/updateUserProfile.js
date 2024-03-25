@@ -8,7 +8,7 @@ export const UPDATE_USER_PROFILE_FAILURE = 'UPDATE_USER_PROFILE_FAILURE'
 export const updateUserProfile = (userData) => async (dispatch) => {
 
 try {
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const userInfo = JSON.parse(localStorage.getItem('userInfo')) || JSON.parse(sessionStorage.getItem('userInfo'));
   const userName = userInfo.userName;
     
     dispatch({ type: UPDATE_USER_PROFILE_REQUEST })
@@ -26,7 +26,7 @@ try {
       payload: data.userName,
     });
 
-    localStorage.setItem('userInfo', JSON.stringify({ ...userInfo, userName: data.userName }));
+    localStorage.setItem('userInfo', JSON.stringify({ ...userInfo, userName: data.userName })) || sessionStorage.setItem('userInfo', JSON.stringify({ ...userInfo, userName: data.userName }));
 
   } catch (error) {
     console.error("Error updating user profile:", error);

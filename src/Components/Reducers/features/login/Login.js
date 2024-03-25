@@ -16,8 +16,14 @@ export const Login = (credentials) => {
             .then(response => {
                 console.log('Login successful:', response.data);
                 const token = response.data.body.token;
-                localStorage.setItem('userInfo', JSON.stringify({token: token}));
-                console.log('Stored in localStorage:', localStorage.getItem('userInfo'));
+                if (credentials.rememberMe) {
+                    localStorage.setItem('userInfo', JSON.stringify({token: token}));
+                    console.log('Stored in localStorage:', localStorage.getItem('userInfo'));
+                }
+               else {
+                   sessionStorage.setItem('userInfo', JSON.stringify({token: token}));
+                   console.log('Stored in sessionStorage:', sessionStorage.getItem('userInfo'));
+                }
                 dispatch({ type: LOGIN_SUCCESS, payload: response.data.body });
             })
             .catch(error => {
