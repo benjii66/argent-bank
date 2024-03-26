@@ -1,3 +1,4 @@
+//the initial state means the user isn't trying to login yet
 const initialState = {
     loading: false,
     userInfo: null,
@@ -9,10 +10,9 @@ export const loginReducer = (state = initialState, action) => {
         case 'LOGIN_REQUEST':
             return {
                 ...state,
-                loading: true
+                loading: true //the user is trying to login
             };
         case 'LOGIN_SUCCESS':
-            console.log('Login success:', action.payload);
             return {
                 ...state,
                 loading: false,
@@ -24,6 +24,8 @@ export const loginReducer = (state = initialState, action) => {
                     loading: false,
                     error: action.payload
                 };
+
+                //if the user logs out, the user information is null because is not logged in anymore
                 case 'LOGOUT':
                     return {
                         ...initialState,

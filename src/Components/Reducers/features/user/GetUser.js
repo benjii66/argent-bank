@@ -11,27 +11,30 @@ export const GetUser = () => async (dispatch) => {
     
     dispatch({ type: GET_USER_PROFILE_REQUEST });
 
-    const userInfo = JSON.parse(localStorage.getItem('userInfo')) || JSON.parse(sessionStorage.getItem('userInfo'));
+    //get the user information
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')) 
+    || JSON.parse(sessionStorage.getItem('userInfo'));
+
+    //get the user token
     const token = userInfo?.token;
 
-    console.log('userInfo:', userInfo);
-    console.log('Token:', token);
-    
+     //try the existence of the token
     if(!token) {
-        console.error('Token ');
+        console.error("No Token Found");
         return;
     }
 
+    //request the user profile
     const config = {
       headers: {
         Authorization: `Bearer ${token}`
       }
     };
 
+    //just a post request to get the user profile
     const {data}  = await axios.post(`${apiPath}/profile`, {} ,config);
 
-    console.log('User profile data received:', data.body);
-    
+    //if success, get the user profile with body content of the data request
     dispatch({
       type: GET_USER_PROFILE_SUCCESS,
       payload: data.body,
@@ -39,6 +42,7 @@ export const GetUser = () => async (dispatch) => {
 
 
   } catch (error) {
+    //otherwise, congratulation, it's an error !
     console.error('Error fetching user profile:', error);
     dispatch({
       type: GET_USER_PROFILE_FAILURE,

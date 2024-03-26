@@ -9,28 +9,38 @@ export const RESET_UPDATE_USER_PROFILE_SUCCESS = 'RESET_UPDATE_USER_PROFILE_SUCC
 export const updateUserProfile = (userData) => async (dispatch) => {
 
 try {
-  const userInfo = JSON.parse(localStorage.getItem('userInfo')) || JSON.parse(sessionStorage.getItem('userInfo'));
+  //get the user information
+  const userInfo = JSON.parse(localStorage.getItem('userInfo')) 
+  || JSON.parse(sessionStorage.getItem('userInfo'));
+
   const userName = userInfo.userName;
-    
+
+  //let's start the process !
     dispatch({ type: UPDATE_USER_PROFILE_REQUEST })
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.token}`, //add the user token
       },
     };
 
+    //put request to update the user profile
     const { data } = await axios.put(`${apiPath}/profile`, userData, config);
-    console.log("pseudo api : ",userName);
+    
+    //if success, update the user profile
     dispatch({
       type: UPDATE_USER_PROFILE_SUCCESS,
       payload: data.userName,
     });
 
-    localStorage.setItem('userInfo', JSON.stringify({ ...userInfo, userName: data.userName })) || sessionStorage.setItem('userInfo', JSON.stringify({ ...userInfo, userName: data.userName }));
+    //update the user profile in the local storage or session storage
+    localStorage.setItem('userInfo', JSON.stringify({ ...userInfo, userName: data.userName })) 
+    || sessionStorage.setItem('userInfo', JSON.stringify({ ...userInfo, userName: data.userName }));
 
   } catch (error) {
     console.error("Error updating user profile:", error);
+    //otherwise, well it's an error
     dispatch({
       type: UPDATE_USER_PROFILE_FAILURE,
       payload: error.response && error.response.data.message

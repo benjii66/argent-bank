@@ -38,8 +38,11 @@ const transactionData = [
 ];
 
 export const Transactions = () => {
+
+  // State to know which transaction is open
   const [openIndex, setOpenIndex] = useState(null);
 
+  // Function to open/close transaction details
   const handleDetails = (index) => {
     setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));
   };
@@ -82,6 +85,8 @@ export const Transactions = () => {
                 </div>
                 <div className="transaction-details-value">
                   <p>{transaction.details.transactionType}</p>
+                  
+                  {/* fake links to edit the category and note  */}
                   <Link to="/" aria-label={`Edit ${transaction.details.category} category`}>
                     <p className="edit-icon">{transaction.details.category}&#9998;</p>
                   </Link>

@@ -9,11 +9,14 @@ export const Header = () => {
 
   const logoutDispatch = useDispatch();
 
-  const location = useLocation();
+  //gonna need the current location of the user for the path in the header
+  const location = useLocation(); 
   const { userInfo } = useSelector(state => state.userLogin);
   const isUserLoggedIn = !!userInfo;
+
   const isHomePage = location.pathname === '/' || location.pathname === '/userProfile' || location.pathname === '/transactions';
 
+  //if the user is logged in, the header will display the dashboard link and the sign out link
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
     sessionStorage.removeItem('userInfo');

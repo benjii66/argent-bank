@@ -4,18 +4,16 @@ import { GetUser } from './GetUser';
 import { Link } from 'react-router-dom';
 import Button from '../../../Common/Button';
 
-
-
 export const User = () => {
 
   const dispatch = useDispatch();
+
+  //extract the user profile and the possible error from the state
   const {profile,error} = useSelector(state => state.user);
   
-  console.log("profile : ", profile.userName);
-
     useEffect(() => {
         dispatch(GetUser());
-    }, [dispatch]);
+    }, [dispatch]); //trigger if only the user state is dispatched
 
   if (error) return <Link to="/" className='main-nav-item'>Non connecté...</Link >;
 

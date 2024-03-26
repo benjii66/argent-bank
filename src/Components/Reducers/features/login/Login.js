@@ -7,27 +7,32 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const Login = (credentials) => {
     return dispatch => {
-        console.log('Dispatching Login with credentials:', credentials);
-        dispatch({ type: LOGIN_REQUEST });
+
+        dispatch({ type: LOGIN_REQUEST }); // trigger the login request by the user
         
+        //send the user credentials/information to the server
         axios.post(`${apiPath}/login`, credentials, {
             headers: {'Content-Type': 'application/json'}        
         })
             .then(response => {
-                console.log('Login successful:', response.data);
+
+                //if the user is logged in, get the token
                 const token = response.data.body.token;
-                if (credentials.rememberMe) {
+
+                //if remember me is checked, store the token in the local storage
+                if (credentials.rememberMe) 
                     localStorage.setItem('userInfo', JSON.stringify({token: token}));
-                    console.log('Stored in localStorage:', localStorage.getItem('userInfo'));
-                }
-               else {
+
+                //otherwise, store the token in the session storage
                    sessionStorage.setItem('userInfo', JSON.stringify({token: token}));
-                   console.log('Stored in sessionStorage:', sessionStorage.getItem('userInfo'));
-                }
+
+                //in the end the user is successfully logged in
                 dispatch({ type: LOGIN_SUCCESS, payload: response.data.body });
             })
             .catch(error => {
+                //otherwise it's an error
                 console.error('Error response:', error.response.data);
+                dispatch({ type: LOGIN_FAILURE, payload: error.response.data.message });
             });
     };
 };
