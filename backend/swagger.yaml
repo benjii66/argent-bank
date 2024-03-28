@@ -9,11 +9,11 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /transactions/{userId}:
+  /transactions/:
     get:
       tags:
         - Transactions Module
-      summary: Get Transactions
+      summary: Get All Transactions
       description: API endpoint for fetching all transactions for a specific user
       parameters:
         - name: userId
@@ -21,6 +21,18 @@ paths:
           required: true
           type: string
           description: The user ID to fetch transactions for
+        - name: startDate
+          in: query
+          required: false
+          type: string
+          format: date
+          description: Start date of the period to retrieve transactions (format: YYYY-MM-DD)
+        - name: endDate
+          in: query
+          required: false
+          type: string
+          format: date
+          description: End date of the period to retrieve transactions (format: YYYY-MM-DD)
       security:
         - Bearer: []
       responses:
@@ -32,6 +44,67 @@ paths:
               $ref: '#/definitions/Transaction'
         '400':
           description: Invalid user ID
+        '403':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - Transactions Module
+      summary: Add Transactions
+      description: API endpoint for creating all transactions for a specific user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: The user ID to fetch transactions for
+        - in: body
+          name: body
+          description: Transaction Payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewTransaction'
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/NewTransaction'
+        '400':
+          description: Invalid user ID
+        '404':
+          description: User not found
+        '403':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - Transactions Module
+      summary: Get Transactions
+      description: fetching a specific transaction for a specific user
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          type: string
+          description: ID of the transaction to retrieve
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          schema:
+              $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid transactionID
+        '403':
+          description: Unauthorized
         '404':
           description: User not found
         '500':
@@ -53,103 +126,46 @@ paths:
         '200':
           description: Transactions retrieved successfully
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Transaction'
+              $ref: '#/definitions/NewTransaction'
         '400':
           description: Invalid user ID
         '404':
           description: User not found
+        '403':
+          description: Unauthorized
         '500':
           description: Internal Server Error
-  /transactions/{userId}/{transactionId}:
-    put:
-      tags:
-        - Transactions Module
-      summary: Update Transaction
-      description: API endpoint for updating an existing transaction for a specific user
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          type: string
-          description: The user ID of the transaction owner
-        - name: transactionId
-          in: path
-          required: true
-          type: string
-          description: The transaction ID to update
-        - in: body
-          name: body
-          description: Updated transaction data
-          required: true
-          schema:
-            $ref: '#/definitions/Transaction'
-      security:
-        - Bearer: []
-      responses:
-        '200':
-          description: Transaction updated successfully
-          schema:
-            $ref: '#/definitions/Transaction'
-        '400':
-          description: Invalid transaction data
-        '404':
-          description: Transaction or user not found
-        '500':
-          description: Internal Server Error
-
-   
+  /transactions/{transactionId}:   
     patch:
       tags:
         - Transactions Module
       summary: Modify Transaction
       description: API endpoint for modifying a transaction for a specific user
       parameters:
-        - name: userId
-          in: path
-          required: true
-          type: string
-          description: The user ID of the transaction owner
-        - name: transactionId
-          in: path
-          required: true
-          type: string
-          description: The transaction ID to modify
+          - name: transactionId
+            in: path
+            required: true
+            type: string
+            description: The transaction ID to modify
+            parameters:
+          - in: body
+            name: body
+            description: Transaction Payload
+            required: true
+            schema:
+              $ref: '#/definitions/PatchTransaction'
       security:
         - Bearer: []
       responses:
         '200':
           description: Transaction modified successfully
+        '403':
+          description: Unauthorized
         '404':
           description: Transaction or user not found
         '500':
           description: Internal Server Error
-    delete:
-      tags:
-        - Transactions Module
-      summary: Delete Transaction
-      description: API endpoint for deleting a transaction for a specific user
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          type: string
-          description: The user ID of the transaction owner
-        - name: transactionId
-          in: path
-          required: true
-          type: string
-          description: The transaction ID to delete
-      security:
-        - Bearer: []
-      responses:
-        '200':
-          description: Transaction deleted successfully
-        '404':
-          description: Transaction or user not found
-        '500':
-          description: Internal Server Error
+    
   /user/login:
     post:
       tags:
@@ -172,6 +188,8 @@ paths:
             $ref: '#/definitions/LoginResponse'
         '400':
           description: Invalid Fields
+        '403':
+          description: Unauthorized
         '500':
           description: Internal Server Error
   
@@ -197,6 +215,8 @@ paths:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
+        '403':
+          description: Unauthorized
         '500':
           description: Internal Server Error
 
@@ -217,6 +237,8 @@ paths:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
+        '403':
+          description: Unauthorized
         '500':
           description: Internal Server Error
     put:
@@ -242,6 +264,8 @@ paths:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
+        '403':
+          description: Unauthorized
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -302,8 +326,6 @@ definitions:
   Transaction:
     type: object
     properties:
-      id:
-        type: string
       date:
         type: string
         format: date-time
@@ -313,6 +335,12 @@ definitions:
         type: number
       balance:
         type: number
+      transactionType:
+        type: string
+      category:
+        type: string
+      note:
+        type: string
   NewTransaction:
     type: object
     properties:
@@ -323,3 +351,21 @@ definitions:
         type: string
       amount:
         type: number
+      balance:
+        type: number
+      transactionType:
+        type: string
+      category:
+        type: string
+      note:
+        type: string
+  PatchTransaction:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date-time
+      category:
+        type: string
+      note:
+        type: string

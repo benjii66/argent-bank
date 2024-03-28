@@ -13,7 +13,18 @@
   .main-nav a.router-link-exact-active {
     color: #42b983;
   }
+
+  .main-items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   
+  .nav-username{
+    text-decoration: none;
+    margin-right: 0.5rem;
+  }
+
   .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
